@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from functools import total_ordering
 
 #TODO: store private key in credential store
-PRIVATE_KEY='200762965-0170a2493ae52ad5645686983927a0ad'
+MTN_PROJECT_PRIVATE_KEY='200762965-0170a2493ae52ad5645686983927a0ad'
 
 @total_ordering
 class Route:
@@ -27,7 +27,7 @@ class Route:
         return "HEIGHT: {}ft".format(self.height) + ' ' + str(self.json_info['url'])
 
     
-def get_routes_by_lat_lon(lat, lon, key=PRIVATE_KEY,
+def get_routes_by_lat_lon(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
         maxDistanceMiles='', maxResults='', minDifficulty='', maxDifficulty=''):
     parameters = {"lat": lat, "lon": lon, "maxDistance": maxDistanceMiles,
             "minDiff": minDifficulty, "maxDiff": maxDifficulty, "key": key}
@@ -55,7 +55,7 @@ def get_route_height(url):
         return int(height_in_ft)
 
 #sort in descending order
-def get_height_sorted_routes(lat, lon, key=PRIVATE_KEY,
+def get_height_sorted_routes(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
                 maxDistanceMiles='', maxResults='', minDifficulty='', maxDifficulty=''):
         try:
             routes = get_routes_by_lat_lon(
