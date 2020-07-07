@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from functools import total_ordering
 
 #TODO: store private key in credential store
-MTN_PROJECT_PRIVATE_KEY='200762965-0170a2493ae52ad5645686983927a0ad'
+MTN_PROJECT_PRIVATE_KEY = '200829148-b236255ec26c32a8f7d7c01b3f363bcc'
 
 @total_ordering
 class Route:
