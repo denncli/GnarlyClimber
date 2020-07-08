@@ -7,9 +7,9 @@ Andrew DeOrio <awdeorio@umich.edu>
 from setuptools import setup
 
 setup(
-    name='gnarly-climber',
+    name='GnarlyClimber',
     version='0.1.0',
-    packages=['gnarly-climber'],
+    packages=['GnarlyClimber'],
     include_package_data=True,
     install_requires=[
         'arrow==0.15.7',

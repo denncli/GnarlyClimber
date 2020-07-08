@@ -1,7 +1,7 @@
 {
-  "name": "gnarly-climber",
+  "name": "GnarlyClimber",
   "version": "0.1.0",
-  "description": "gnarly-climber front end",
+  "description": "GnarlyClimber front end",
   "main": "gnarly-climber/js/main.jsx",
   "author": "denncli",
   "license": "MIT",
