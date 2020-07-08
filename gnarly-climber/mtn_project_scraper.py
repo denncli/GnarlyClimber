@@ -56,7 +56,6 @@ def get_route_height_from_webpage(url):
         return int(height_in_ft)
 
 def get_route_height_from_db(route_id):
-    print('get route hieght from db')
     connection = model.get_db()
     query_response = connection.execute(
         "SELECT height FROM route_heights"
