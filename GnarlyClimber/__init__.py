@@ -18,4 +18,4 @@ app.config.from_envvar('GNARLYCLIMBER_SETTINGS', silent=True)
 # going to tell pylint and pycodestyle to ignore this coding style violation.
 import GnarlyClimber.views  # noqa: E402  pylint: disable=wrong-import-position
 import GnarlyClimber.model  # noqa: E402  pylint: disable=wrong-import-position
-#import GnarlyClimber.api  # noqa: E402  pylint: disable=wrong-import-position
+import GnarlyClimber.api  # noqa: E402  pylint: disable=wrong-import-position

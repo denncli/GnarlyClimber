@@ -111,5 +111,4 @@ def get_height_sorted_routes(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
 #get_route_height('https://www.mountainproject.com/route/116715799/roto')
 #get_height_sorted_routes(40.2476, -76.4694, minDifficulty='V0', maxDifficulty='V17', maxDistanceMiles=10)
 #get_height_sorted_routes(39.0182, -77.2086, minDifficulty='V0', maxDifficulty='V17', maxDistanceMiles=20, maxResults=10)
-
-get_route_height_from_db(1)
+#get_route_height_from_db(1)
