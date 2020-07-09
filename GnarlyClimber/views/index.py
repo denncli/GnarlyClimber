@@ -5,7 +5,7 @@ URLs include:
 /
 """
 import flask
-import insta485
+import GnarlyClimber
 
 
 @GnarlyClimber.app.route('/')
