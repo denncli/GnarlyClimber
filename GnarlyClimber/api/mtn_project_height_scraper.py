@@ -4,7 +4,7 @@ from requests.exceptions import HTTPError
 import json
 from bs4 import BeautifulSoup
 from functools import total_ordering
-import model
+import GnarlyClimber
 
 #TODO: store private key in credential store
 MTN_PROJECT_PRIVATE_KEY = '200829148-b236255ec26c32a8f7d7c01b3f363bcc'
@@ -18,6 +18,10 @@ class Route:
     def get_height(self):
         return self.height
     
+    def get_json_representation(self):
+        json_dict = {'mtn_project_info': self.json_info, 'height': self.height}
+        return json_dict
+    
     def __lt__(self, other):
         return self.get_height() < other.get_height()
     
@@ -26,7 +30,14 @@ class Route:
     
     def __str__(self):
         return "HEIGHT: {}ft".format(self.height) + ' ' + str(self.json_info['url'])
-    
+
+def convert_list_of_routes_to_json(route_list):
+    json_list = []
+    for route in route_list:
+        json_list.append(route.get_json_representation())
+    return json_list
+
+#TODO: cache api results    
 def get_routes_json_by_lat_lon(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
         maxDistanceMiles='', maxResults='', minDifficulty='', maxDifficulty=''):
     parameters = {"lat": lat, "lon": lon, "maxDistance": maxDistanceMiles, "maxResults": maxResults, 
@@ -55,15 +66,20 @@ def get_route_height_from_webpage(url):
         return int(height_in_ft)
 
 def get_route_height_from_db(route_id):
-    connection = model.get_db()
+    connection = GnarlyClimber.model.get_db()
     query_response = connection.execute(
-        "SELECT height FROM route_heights"
+        "SELECT height FROM route_heights "
         f"WHERE route_id=\'{route_id}\'"
     ).fetchall()
-    return 0 #TODO: return height
+    if(not query_response):
+        GnarlyClimber.app.logger.info(str(route_id) + " not found in db")
+        return None
+    else:
+        GnarlyClimber.app.logger.info(str(route_id) + " found in db")
+        return query_response[0]['height']
 
 def update_db_with_route_height(route_id, height):
-    connection = model.get_db()
+    connection = GnarlyClimber.model.get_db()
     connection.execute(
         f"INSERT INTO route_heights (route_id, height) VALUES (\'{route_id}\', \'{height}\')"
     )
@@ -73,8 +89,14 @@ def get_route_height(route_json):
     height = get_route_height_from_db(route_id)
     if height: 
         return height #height cached in db
-    height = get_route_height_from_webpage(route_json['url'])
-    update_db_with_route_height(route_json['id'], height)
+    try:
+        height = get_route_height_from_webpage(route_json['url']) #TODO: spawn a thread
+        update_db_with_route_height(route_json['id'], height)
+    except RuntimeError:
+        #-1 in database denotes height not listed
+        update_db_with_route_height(route_json['id'], -1)
+        raise RuntimeError
+
     return height
 
 #sort in descending order
@@ -84,17 +106,17 @@ def get_height_sorted_routes(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
             routes = get_routes_json_by_lat_lon(
                     lat, lon, key, maxDistanceMiles, maxResults, minDifficulty, maxDifficulty)
         except HTTPError as e:
-            #TODO: handle this exception for client without exiting
             print('Mountain project api returned an error status for this request!')
             print(e)
-            exit(1)
+            raise HTTPError
 
         height_sorted_routes = []
         for route in routes:
             try:
                 height = get_route_height(route)
-                routeWithHeight = Route(route, height)
-                height_sorted_routes.append(routeWithHeight)
+                if height != -1:
+                    routeWithHeight = Route(route, height)
+                    height_sorted_routes.append(routeWithHeight)
             except (RuntimeError, HTTPError):
                 #TODO: Increment counter of unfound heights. If it is large then there is an issue
                 #height not found on page. likely unlisted

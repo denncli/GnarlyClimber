@@ -1,7 +1,7 @@
 """Insta485 model (database) API."""
 import sqlite3
 import flask
-#import insta485
+import GnarlyClimber
 
 
 def dict_factory(cursor, row):
@@ -20,9 +20,7 @@ def get_db():
     https://flask.palletsprojects.com/en/1.0.x/appcontext/#storing-data
     """
     if 'sqlite_db' not in flask.g:
-        #TODO: change back to read config instead of hard code
-        #db_filename = insta485.app.config['DATABASE_FILENAME']
-        db_filename = '../var/route_heights.sqlite3' ######## TODO !!!!
+        db_filename = GnarlyClimber.app.config['DATABASE_FILENAME']
         flask.g.sqlite_db = sqlite3.connect(db_filename)
         flask.g.sqlite_db.row_factory = dict_factory
 
@@ -31,9 +29,8 @@ def get_db():
         flask.g.sqlite_db.execute("PRAGMA foreign_keys = ON")
     return flask.g.sqlite_db
 
-#TODO add back
-'''
-@insta485.app.teardown_appcontext
+
+@GnarlyClimber.app.teardown_appcontext
 def close_db(error):
     """Close the database at the end of a request.
 
@@ -45,4 +42,3 @@ def close_db(error):
     if sqlite_db is not None:
         sqlite_db.commit()
         sqlite_db.close()
-'''
