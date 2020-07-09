@@ -2,9 +2,9 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './gnarly-climber/js/main.jsx',
+  entry: './GnarlyClimber/js/main.jsx',
   output: {
-    path: path.join(__dirname, '/gnarly-climber/static/js/'),
+    path: path.join(__dirname, '/GnarlyClimber/static/js/'),
     filename: 'bundle.js',
   },
   module: {

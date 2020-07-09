@@ -26,7 +26,6 @@ class Route:
     
     def __str__(self):
         return "HEIGHT: {}ft".format(self.height) + ' ' + str(self.json_info['url'])
-
     
 def get_routes_json_by_lat_lon(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
         maxDistanceMiles='', maxResults='', minDifficulty='', maxDifficulty=''):
@@ -61,18 +60,22 @@ def get_route_height_from_db(route_id):
         "SELECT height FROM route_heights"
         f"WHERE route_id=\'{route_id}\'"
     ).fetchall()
-    return 0
+    return 0 #TODO: return height
 
+def update_db_with_route_height(route_id, height):
+    connection = model.get_db()
+    connection.execute(
+        f"INSERT INTO route_heights (route_id, height) VALUES (\'{route_id}\', \'{height}\')"
+    )
 
 def get_route_height(route_json):
     route_id = route_json['id']
     height = get_route_height_from_db(route_id)
-    if height:
-        return height
+    if height: 
+        return height #height cached in db
     height = get_route_height_from_webpage(route_json['url'])
     update_db_with_route_height(route_json['id'], height)
     return height
-
 
 #sort in descending order
 def get_height_sorted_routes(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
