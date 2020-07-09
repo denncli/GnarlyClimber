@@ -101,9 +101,7 @@ def get_height_sorted_routes(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
                 pass
 
         height_sorted_routes.sort(reverse=True)
-        for route in height_sorted_routes:
-            print(route)
-
+        return height_sorted_routes
 
 #print(get_routes_json_by_lat_lon(lat=39,lon=-77.2))
 #get_route_height('https://www.mountainproject.com/route/106051051/slanty-crack')
