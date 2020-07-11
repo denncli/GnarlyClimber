@@ -1,6 +1,5 @@
 import flask
 import GnarlyClimber
-import GnarlyClimber.api.mtn_project_height_scraper #TODO: import as, it causes import to fail
 from requests.exceptions import HTTPError
 
 #TODO: support search by city, consider doing conversion to lat lon on front end 
@@ -17,9 +16,10 @@ def get_heights(lat, lon, maxDistanceMiles, maxResults, minDifficulty, maxDiffic
                 lat, lon, maxDistanceMiles=maxDistanceMiles, maxResults=maxResults,
                 minDifficulty=minDifficulty, maxDifficulty=maxDifficulty)
         success = True
-    except:
+    except Exception as e:
         height_sorted_routes = []
         success = False
+        GnarlyClimber.app.logger.error(e)
     
     height_sorted_routes = GnarlyClimber.api.mtn_project_height_scraper.convert_list_of_routes_to_json(
             height_sorted_routes)

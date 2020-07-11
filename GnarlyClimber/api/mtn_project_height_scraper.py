@@ -5,9 +5,25 @@ import json
 from bs4 import BeautifulSoup
 from functools import total_ordering
 import GnarlyClimber
+import time
 
 #TODO: store private key in credential store
 MTN_PROJECT_PRIVATE_KEY = '200829148-b236255ec26c32a8f7d7c01b3f363bcc'
+
+class RateLimiter:
+    def __init__(self, minimumTimeBetweenExecution):
+        self.minimumTimeBetweenExecution = minimumTimeBetweenExecution
+        self.prevExecutionTime = None
+
+    def stall_until_minimum_time_reached(self):
+        if self.prevExecutionTime:
+            cur_time = time.time()
+            elapsed_time = cur_time - self.prevExecutionTime
+            if elapsed_time < self.minimumTimeBetweenExecution:
+                time_to_stall = self.minimumTimeBetweenExecution - elapsed_time
+                time.sleep(time_to_stall)
+        self.prevExecutionTime = time.time()
+
 
 @total_ordering
 class Route:
@@ -43,11 +59,18 @@ def get_routes_json_by_lat_lon(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
     parameters = {"lat": lat, "lon": lon, "maxDistance": maxDistanceMiles, "maxResults": maxResults, 
             "minDiff": minDifficulty, "maxDiff": maxDifficulty, "key": key}
     api_url = 'https://www.mountainproject.com/data/get-routes-for-lat-lon'
+
+    if GnarlyClimber.app.config['LIMIT_MTN_PROJECT_API_HIT_RATE']:
+        GnarlyClimber.api.MTN_PROJECT_API_RATE_LIMITER.stall_until_minimum_time_reached()
+
     response = get(api_url, parameters)
     response.raise_for_status()
     return response.json()['routes']
 
 def get_route_height_from_webpage(url):
+    if GnarlyClimber.app.config['LIMIT_MTN_PROJECT_SCRAPE_RATE']:
+        GnarlyClimber.api.MTN_PROJECT_SCRAPE_RATE_LIMITER.stall_until_minimum_time_reached()
+
     response = get(url)
     response.raise_for_status()
     raw_html = response.content
@@ -106,8 +129,8 @@ def get_height_sorted_routes(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
             routes = get_routes_json_by_lat_lon(
                     lat, lon, key, maxDistanceMiles, maxResults, minDifficulty, maxDifficulty)
         except HTTPError as e:
-            print('Mountain project api returned an error status for this request!')
-            print(e)
+            GnarlyClimber.app.logger.error('Mountain project api returned an error status for this request!')
+            GnarlyClimber.app.logger.error(e)
             raise HTTPError
 
         height_sorted_routes = []
@@ -124,11 +147,3 @@ def get_height_sorted_routes(lat, lon, key=MTN_PROJECT_PRIVATE_KEY,
 
         height_sorted_routes.sort(reverse=True)
         return height_sorted_routes
-
-#print(get_routes_json_by_lat_lon(lat=39,lon=-77.2))
-#get_route_height('https://www.mountainproject.com/route/106051051/slanty-crack')
-#get_route_height('https://www.mountainproject.com/route/116715747/the-father')
-#get_route_height('https://www.mountainproject.com/route/116715799/roto')
-#get_height_sorted_routes(40.2476, -76.4694, minDifficulty='V0', maxDifficulty='V17', maxDistanceMiles=10)
-#get_height_sorted_routes(39.0182, -77.2086, minDifficulty='V0', maxDifficulty='V17', maxDistanceMiles=20, maxResults=10)
-#get_route_height_from_db(1)
