@@ -8,8 +8,6 @@ def crawl_mtn_project_boulders(south_lat, north_lat, west_lon, east_lon):
     #increment by 1 degree (~66miles). Get everything within 200mi radius
     for lat in range(south_lat, north_lat + 1):
         for lon in range(west_lon, east_lon + 1):
-            if lon % 30 == 0:
-                print('Lat: {}, Lon: {}'.format(lat, lon))
             api_url = 'http://localhost:8000/api/height/{}/{}/{}/{}/{}/{}/'.format(
                 lat, lon, 200, 500, 'V0', 'V17' 
             )
@@ -26,6 +24,6 @@ def crawl_united_states():
     #split in fifths to avoid overloading MP servers
     us_total_latitude_fifth = (US_EASTERNMOST_LONGITUDE - US_WESTERNMOST_POINT) / 5
     crawl_mtn_project_boulders(US_SOUTHERNMOST_LATITUDE, US_NORTHERNMOST_LATITUDE, 
-            US_WESTERNMOST_POINT + us_total_latitude_fifth, US_WESTERNMOST_POINT + 2 * us_total_latitude_fifth)
+            US_WESTERNMOST_POINT + 2 * us_total_latitude_fifth, US_WESTERNMOST_POINT + 3 * us_total_latitude_fifth)
 
 crawl_united_states()
