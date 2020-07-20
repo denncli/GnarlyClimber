@@ -1,4 +1,4 @@
-from GnarlyClimber.api.heights import get_heights
+from GnarlyClimber.api.routes import get_routes
 from GnarlyClimber.api.mtn_project_height_scraper import *
 
 #global rate limiter

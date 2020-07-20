@@ -10,7 +10,7 @@
     <meta name="keywords" content="Colrolib Templates">
 
     <!-- Title Page-->
-    <title>Au Form Wizard</title>
+    <title>Gnarly Climber</title>
 
     <!-- Icons font CSS-->
     <link href="static/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -45,89 +45,128 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab1">
-                            <form method="POST" action="#">
+                            <form method="GET" action="/routes/">
                                 <div class="input-group">
                                     <label class="label">where:</label>
-                                    <input class="input--style-1" type="text" name="address" placeholder="City, region or specific hotel" required="required">
+                                    <input class="input--style-1" type="text" name="location" placeholder="City name or coordinates (e.g. 42, -83.7)" required="required">
+                                </div>
+                                <div class="input-group">
+                                    <label class="label">Distance:</label>
+                                    <input class="input--style-1" type="text" name="maxDistanceMiles" placeholder="Maximum distance (miles)">
                                 </div>
                                 <div class="row row-space">
                                     <div class="col-2">
                                         <div class="input-group">
-                                            <label class="label">check-in:</label>
-                                            <input class="input--style-1" type="text" name="check-in" placeholder="mm/dd/yyyy" id="input-start">
+                                            <label class="label">Min Difficulty:</label>
+                                            <div class="rs-select2 js-select-simple select--no-search">
+                                                <select name="minDifficulty">
+                                                    <option selected="selected">V0</option>
+                                                    <option>V1</option>
+                                                    <option>V2</option>
+                                                    <option>V3</option>
+                                                    <option>V4</option>
+                                                    <option>V5</option>
+                                                    <option>V6</option>
+                                                    <option>V7</option>
+                                                    <option>V8</option>
+                                                    <option>V9</option>
+                                                    <option>V10</option>
+                                                    <option>V11</option>
+                                                    <option>V12</option>
+                                                    <option>V13</option>
+                                                    <option>V14</option>
+                                                    <option>V15</option>
+                                                    <option>V16</option>
+                                                    <option>V17</option>
+                                                </select>
+                                                <div class="select-dropdown"></div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="input-group">
-                                            <label class="label">check-out:</label>
-                                            <input class="input--style-1" type="text" name="check-out" placeholder="mm/dd/yyyy" id="input-end">
+                                            <label class="label">Max Difficulty:</label>
+                                            <div class="rs-select2 js-select-simple select--no-search">
+                                                <select name="maxDifficulty">
+                                                    <option>V0</option>
+                                                    <option>V1</option>
+                                                    <option>V2</option>
+                                                    <option>V3</option>
+                                                    <option>V4</option>
+                                                    <option>V5</option>
+                                                    <option>V6</option>
+                                                    <option>V7</option>
+                                                    <option>V8</option>
+                                                    <option>V9</option>
+                                                    <option>V10</option>
+                                                    <option>V11</option>
+                                                    <option>V12</option>
+                                                    <option>V13</option>
+                                                    <option>V14</option>
+                                                    <option>V15</option>
+                                                    <option>V16</option>
+                                                    <option selected="selected">V17</option>
+                                                </select>
+                                                <div class="select-dropdown"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="input-group">
-                                    <label class="label">travellers:</label>
-                                    <div class="input-group-icon" id="js-select-special">
-                                        <input class="input--style-1" type="text" name="traveller" value="1 Adult, 0 Children, 1 Room" disabled="disabled" id="info">
-                                        <i class="zmdi zmdi-chevron-down input-icon"></i>
-                                    </div>
-                                    <div class="dropdown-select">
-                                        <ul class="list-room">
-                                            <li class="list-room__item">
-                                                <span class="list-room__name">Room 1</span>
-                                                <ul class="list-person">
-                                                    <li class="list-person__item">
-                                                        <span class="name">Adults</span>
-                                                        <div class="quantity quantity1">
-                                                            <span class="minus">-</span>
-                                                            <input class="inputQty" type="number" min="0" value="1">
-                                                            <span class="plus">+</span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="list-person__item">
-                                                        <span class="name">Children</span>
-                                                        <div class="quantity quantity2">
-                                                            <span class="minus">-</span>
-                                                            <input class="inputQty" type="number" min="0" value="0">
-                                                            <span class="plus">+</span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        <div class="list-room__footer">
-                                            <a href="#" id="btn-add-room">Add room</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-t-5">
-                                    <label class="checkbox-container m-r-45">Add a flight
-                                        <input type="checkbox" checked="checked" name="add-flight">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="checkbox-container">Add a car
-                                        <input type="checkbox" name="add-car">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <button class="btn-submit" type="submit">search</button>
+                                <button class="btn-submit" type="submit">search tallest routes</button>
                             </form>
                         </div>
                         <div class="tab-pane" id="tab2">
                             <form method="POST" action="#">
                                 <div class="input-group">
-                                    <label class="label">location:</label>
-                                    <input class="input--style-1" type="text" name="location" placeholder="Destination, hotel name" required="required">
+                                    <label class="label">where:</label>
+                                    <input class="input--style-1" type="text" name="location" placeholder="City name or coordinates (e.g. 42, -83.7)" required="required">
+                                </div>
+                                <div class="input-group">
+                                    <label class="label">Distance:</label>
+                                    <input class="input--style-1" type="text" name="maxDist" placeholder="Maximum distance (miles)">
                                 </div>
                                 <div class="row row-space">
                                     <div class="col-2">
                                         <div class="input-group">
-                                            <label class="label">driver age:</label>
+                                            <label class="label">Min Difficulty:</label>
                                             <div class="rs-select2 js-select-simple select--no-search">
-                                                <select name="driver-age">
-                                                    <option>23</option>
-                                                    <option>24</option>
-                                                    <option selected="selected">25</option>
-                                                    <option>26</option>
+                                                <select name="minDifficulty">
+                                                    <option>3rd</option>
+                                                    <option>4th</option>
+                                                    <option selected="selected">5.0</option>
+                                                    <option>5.1</option>
+                                                    <option>5.2</option>
+                                                    <option>5.3</option>
+                                                    <option>5.4</option>
+                                                    <option>5.5</option>
+                                                    <option>5.6</option>
+                                                    <option>5.7</option>
+                                                    <option>5.8</option>
+                                                    <option>5.9</option>
+                                                    <option>5.10a</option>
+                                                    <option>5.10b</option>
+                                                    <option>5.10c</option>
+                                                    <option>5.10d</option>
+                                                    <option>5.11a</option>
+                                                    <option>5.11b</option>
+                                                    <option>5.11c</option>
+                                                    <option>5.11d</option>
+                                                    <option>5.12a</option>
+                                                    <option>5.12b</option>
+                                                    <option>5.12c</option>
+                                                    <option>5.12d</option>
+                                                    <option>5.13a</option>
+                                                    <option>5.13b</option>
+                                                    <option>5.13c</option>
+                                                    <option>5.13d</option>
+                                                    <option>5.14a</option>
+                                                    <option>5.14b</option>
+                                                    <option>5.14c</option>
+                                                    <option>5.14d</option>
+                                                    <option>5.15a</option>
+                                                    <option>5.15b</option>
+                                                    <option>5.15c</option>
+                                                    <option>5.15d</option>
                                                 </select>
                                                 <div class="select-dropdown"></div>
                                             </div>
@@ -135,108 +174,125 @@
                                     </div>
                                     <div class="col-2">
                                         <div class="input-group">
-                                            <label class="label">car group:</label>
+                                            <label class="label">Max Difficulty:</label>
                                             <div class="rs-select2 js-select-simple select--no-search">
-                                                <select name="car-group">
-                                                    <option selected="selected">Group S-car</option>
-                                                    <option>Group 1</option>
-                                                    <option>Group 2</option>
-                                                    <option>Group 3</option>
+                                                <select name="maxDifficulty">
+                                                    <option>3rd</option>
+                                                    <option>4th</option>
+                                                    <option>5.0</option>
+                                                    <option>5.1</option>
+                                                    <option>5.2</option>
+                                                    <option>5.3</option>
+                                                    <option>5.4</option>
+                                                    <option>5.5</option>
+                                                    <option>5.6</option>
+                                                    <option>5.7</option>
+                                                    <option>5.8</option>
+                                                    <option>5.9</option>
+                                                    <option>5.10a</option>
+                                                    <option>5.10b</option>
+                                                    <option>5.10c</option>
+                                                    <option>5.10d</option>
+                                                    <option>5.11a</option>
+                                                    <option>5.11b</option>
+                                                    <option>5.11c</option>
+                                                    <option>5.11d</option>
+                                                    <option>5.12a</option>
+                                                    <option>5.12b</option>
+                                                    <option>5.12c</option>
+                                                    <option>5.12d</option>
+                                                    <option>5.13a</option>
+                                                    <option>5.13b</option>
+                                                    <option>5.13c</option>
+                                                    <option>5.13d</option>
+                                                    <option>5.14a</option>
+                                                    <option>5.14b</option>
+                                                    <option>5.14c</option>
+                                                    <option>5.14d</option>
+                                                    <option>5.15a</option>
+                                                    <option>5.15b</option>
+                                                    <option>5.15c</option>
+                                                    <option selected="selected">5.15d</option>
                                                 </select>
                                                 <div class="select-dropdown"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row row-space">
-                                    <div class="col-2">
-                                        <div class="input-group">
-                                            <label class="label">pick up:</label>
-                                            <input class="input--style-1 js-single-datepicker" type="text" name="pickup" placeholder="mm/dd/yyyy" data-drop="1">
-                                            <div class="dropdown-datepicker" id="dropdown-datepicker1"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-2">
-                                        <div class="input-group">
-                                            <label class="label">time:</label>
-                                            <div class="rs-select2 js-select-simple select--no-search">
-                                                <select name="time-pickup">
-                                                    <option selected="selected">10:00 AM</option>
-                                                    <option>5:00 AM</option>
-                                                    <option>6:00 AM</option>
-                                                    <option>7:00 AM</option>
-                                                </select>
-                                                <div class="select-dropdown"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row row-space">
-                                    <div class="col-2">
-                                        <div class="input-group">
-                                            <label class="label">drop off:</label>
-                                            <input class="input--style-1 js-single-datepicker" type="text" name="dropoff" placeholder="mm/dd/yyyy" data-drop="2">
-                                            `
-                                            <div class="dropdown-datepicker" id="dropdown-datepicker2"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-2">
-                                        <div class="input-group">
-                                            <label class="label">time:</label>
-                                            <div class="rs-select2 js-select-simple select--no-search">
-                                                <select name="time-dropoff">
-                                                    <option selected="selected">10:00 AM</option>
-                                                    <option>5:00 AM</option>
-                                                    <option>6:00 AM</option>
-                                                    <option>7:00 AM</option>
-                                                </select>
-                                                <div class="select-dropdown"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button class="btn-submit m-t-0" type="submit">search</button>
+                                <button class="btn-submit" type="submit">search tallest routes</button>
                             </form>
                         </div>
                         <div class="tab-pane" id="tab3">
                             <form method="POST" action="#">
                                 <div class="input-group">
-                                    <label class="label">origin:</label>
-                                    <input class="input--style-1" type="text" name="origin" placeholder="City or airport" required="required">
+                                    <label class="label">where:</label>
+                                    <input class="input--style-1" type="text" name="location" placeholder="City name or coordinates (e.g. 42, -83.7)" required="required">
                                 </div>
                                 <div class="input-group">
-                                    <label class="label">destination:</label>
-                                    <input class="input--style-1" type="text" name="destination" placeholder="City or airport" required="required">
+                                    <label class="label">Distance:</label>
+                                    <input class="input--style-1" type="text" name="maxDist" placeholder="Maximum distance (miles)">
                                 </div>
                                 <div class="row row-space">
                                     <div class="col-2">
                                         <div class="input-group">
-                                            <label class="label">Departing:</label>
-                                            <input class="input--style-1" type="text" name="check-in" placeholder="mm/dd/yyyy" id="input-start-2">
+                                            <label class="label">Min Difficulty:</label>
+                                            <div class="rs-select2 js-select-simple select--no-search">
+                                                <select name="minDifficulty">
+                                                    <option selected="selected">V0</option>
+                                                    <option>V1</option>
+                                                    <option>V2</option>
+                                                    <option>V3</option>
+                                                    <option>V4</option>
+                                                    <option>V5</option>
+                                                    <option>V6</option>
+                                                    <option>V7</option>
+                                                    <option>V8</option>
+                                                    <option>V9</option>
+                                                    <option>V10</option>
+                                                    <option>V11</option>
+                                                    <option>V12</option>
+                                                    <option>V13</option>
+                                                    <option>V14</option>
+                                                    <option>V15</option>
+                                                    <option>V16</option>
+                                                    <option>V17</option>
+                                                    <option>V18</option>
+                                                </select>
+                                                <div class="select-dropdown"></div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="input-group">
-                                            <label class="label">returning:</label>
-                                            <input class="input--style-1" type="text" name="check-out" placeholder="mm/dd/yyyy" id="input-end-2">
+                                            <label class="label">Max Difficulty:</label>
+                                            <div class="rs-select2 js-select-simple select--no-search">
+                                                <select name="maxDifficulty">
+                                                    <option>V0</option>
+                                                    <option>V1</option>
+                                                    <option>V2</option>
+                                                    <option>V3</option>
+                                                    <option>V4</option>
+                                                    <option>V5</option>
+                                                    <option>V6</option>
+                                                    <option>V7</option>
+                                                    <option>V8</option>
+                                                    <option>V9</option>
+                                                    <option>V10</option>
+                                                    <option>V11</option>
+                                                    <option>V12</option>
+                                                    <option>V13</option>
+                                                    <option>V14</option>
+                                                    <option>V15</option>
+                                                    <option>V16</option>
+                                                    <option>V17</option>
+                                                    <option selected="selected">V18</option>
+                                                </select>
+                                                <div class="select-dropdown"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="p-t-5">
-                                    <label class="checkbox-container m-r-45">First Class
-                                        <input type="checkbox" name="first-class">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="checkbox-container m-r-45">Business
-                                        <input type="checkbox" name="business">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="checkbox-container">Economy
-                                        <input type="checkbox" checked="checked" name="economy">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <button class="btn-submit" type="submit">search</button>
+                                <button class="btn-submit" type="submit">search tallest routes</button>
                             </form>
                         </div>
                     </div>

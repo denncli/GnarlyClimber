@@ -2,14 +2,21 @@ import flask
 import GnarlyClimber
 from requests.exceptions import HTTPError
 
+def parse_coordinates(coordinates):
+    coordinates = coordinates.replace(" ", "")
+    coordinates = coordinates.replace("\t", "")
+    coordinates = coordinates.split(",")
+    lat = coordinates[0]
+    lon = coordinates[1]
+    return float(lat), float(lon)
+
+
 #TODO: support search by city, consider doing conversion to lat lon on front end 
 #TODO: consider putting cached case into this file
-@GnarlyClimber.app.route('/api/height/<string:lat>/<string:lon>/<int:maxDistanceMiles>' \
-        '/<int:maxResults>/<string:minDifficulty>/<string:maxDifficulty>/', methods=["GET"])
-def get_heights(lat, lon, maxDistanceMiles, maxResults, minDifficulty, maxDifficulty):
-    #pass in lat and lon as strings because flask api call does not support negative floats
-    lat = float(lat)
-    lon = float(lon)
+@GnarlyClimber.app.route('/api/routes/<string:location>/<int:maxDistanceMiles>' \
+        '/<string:maxResults>/<string:minDifficulty>/<string:maxDifficulty>/', methods=["GET"])
+def get_routes(location, maxDistanceMiles, maxResults, minDifficulty, maxDifficulty):
+    lat, lon = parse_coordinates(location)
     try:
         height_sorted_routes = \
                 GnarlyClimber.api.mtn_project_height_scraper.get_height_sorted_routes(
